@@ -9,21 +9,21 @@ const Testimonials = () => {
         {
             _id:1,
             name: 'Winson Herry',
-            review: '',
+            review: '🌟🌟🌟🌟🌟 "I can’t recommend Handyman Service enough! I found them to be extremely professional, punctual, and skilled in a range of repairs and installations. They transformed my outdated kitchen into a modern marvel, with new tiles and perfectly installed appliances. The team was friendly, knowledgeable, and meticulous in their work. Their rates were very reasonable, and the quality of their work surpassed all my expectations. My home has never looked better!"',
             location: 'california',
             img: people1
         },
         {
             _id:2,
             name: 'Winson Herry',
-            review: '',
+            review: '🌟🌟🌟🌟🌟 "Outstanding service from Handyman Service! They were a beacon of light when our home needed various repairs. They efficiently fixed a leaking faucet, installed a new light fixture, and even repaired some damaged drywall, all in one visit! Their attention to detail, swift service, and reasonable pricing have made me a loyal customer. It’s a huge relief knowing there’s a trustworthy and skilled handyman service I can call whenever I need help around the house!"',
             location: 'california',
             img: people2
         },
         {
             _id:3,
             name: 'Winson Herry',
-            review: '',
+            review: '🌟🌟🌟🌟🌟 "Handyman Service was a game-changer for our home improvement needs. We hired them for multiple tasks, including painting, plumbing repairs, and furniture assembly. Every task was completed with precision, and their professionalism was unparalleled. The level of craftsmanship and dedication was truly impressive, making Handyman Service our go-to choice for all future home maintenance and repair needs!"',
             location: 'california',
             img: people3
         },
@@ -33,7 +33,7 @@ const Testimonials = () => {
             <div className='flex justify-between'>
                 <div>
                     <h4 className="text-xl text-primary font-bold">Testimonials</h4>
-                    <h2 className='text-3xl'>What our Patients say</h2>
+                    <h2 className='text-3xl'>What our Clients say</h2>
                 </div>
                 <div>
                     <img src={quote} className="w-24 lg:w-48" alt="" />
