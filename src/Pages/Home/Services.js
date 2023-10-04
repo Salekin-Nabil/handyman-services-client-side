@@ -1,7 +1,4 @@
 import React from 'react';
-import fluoride from '../../assets/images/fluoride.png';
-import cavity from '../../assets/images/cavity.png';
-import whitening from '../../assets/images/whitening.png';
 import general from '../../assets/images/services_image/general.jpg';
 import home from '../../assets/images/services_image/home.jpg';
 import paint from '../../assets/images/services_image/paint.jpg';

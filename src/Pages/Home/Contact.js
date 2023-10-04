@@ -11,7 +11,7 @@ const Contact = () => {
         <p className='text-xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-accent to-secondary'>
           Contact Us
         </p>
-        <h1 className='text-4xl'>Stay connected with us</h1>
+        <h1 className='text-4xl'>Inquery for Pre-estimated Schedule</h1>
       </div>
       <div className='grid grid-cols-1 justify-items-center gap-5'>
         <input

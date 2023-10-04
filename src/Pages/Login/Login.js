@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react';
+import login from "../../assets/images/login.png"
 // import { useForm } from 'react-hook-form';
 // import { Link, useLocation, useNavigate } from 'react-router-dom';
 // import { AuthContext } from '../../contexts/AuthProvider';
@@ -35,7 +36,10 @@ const Login = () => {
     // }
 
     return (
-        <div className='h-[800px] flex justify-center items-center md:mt-[-120px]'>
+        <div className='h-[800px] flex justify-center items-center place-content-between md:mt-[-120px]'>
+            {/* <div>
+                <img className='mt-[-100px]' src={login} alt="" />
+            </div> */}
             <div className='w-96 p-7'>
                 <h2 className='text-xl text-center'>Login</h2>
                 <form>
