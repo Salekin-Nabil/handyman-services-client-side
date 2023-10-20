@@ -1,7 +1,11 @@
 import React, { useContext, useState } from 'react';
-import login from "../../assets/images/login.png"
-// import { useForm } from 'react-hook-form';
-// import { Link, useLocation, useNavigate } from 'react-router-dom';
+import login from "../../assets/images/login.png";
+import {useSignInWithGoogle} from 'react-firebase-hooks/auth';
+import auth from '../../firebase.init';
+import { useForm } from 'react-hook-form';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import Loading from '../Loading/Loading';
+import google from '../../assets/images/google.png';
 // import { AuthContext } from '../../contexts/AuthProvider';
 // import useToken from '../../hooks/useToken';
 
@@ -10,15 +14,15 @@ const Login = () => {
     // const { signIn } = useContext(AuthContext);
     // const [loginError, setLoginError] = useState('');
     // const [loginUserEmail, setLoginUserEmail] = useState('');
-    // const [token] = useToken(loginUserEmail);
+    // // const [token] = useToken(loginUserEmail);
     // const location = useLocation();
     // const navigate = useNavigate();
 
     // const from = location.state?.from?.pathname || '/';
 
-    // if (token) {
-    //     navigate(from, { replace: true });
-    // }
+    // // if (token) {
+    // //     navigate(from, { replace: true });
+    // // }
 
     // const handleLogin = data => {
     //     console.log(data);
@@ -34,6 +38,26 @@ const Login = () => {
     //             setLoginError(error.message);
     //         });
     // }
+
+    const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
+
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    let from = location.state?.from?.pathname || "/";
+    
+    let errorElement;
+
+    if(loading){
+        return <Loading></Loading>
+    }
+
+    if (error) {
+        errorElement = <p className='text-white bg-red-700  my-4 text-lg'>Error: {error?.message}</p>
+    }
+
+    if (user) {
+        navigate(from, { replace: true });}
 
     return (
         <div className='h-[800px] flex justify-center items-center place-content-between md:mt-[-120px]'>
@@ -69,9 +93,9 @@ const Login = () => {
                         {/* {loginError && <p className='text-red-600'>{loginError}</p>} */}
                     </div>
                 </form>
-                {/* <p>New to Handyman Services <Link className='text-secondary' to="/signup">Create new Account</Link></p> */}
+                <p className='text-sm text-center'>New to Handyman Services? <Link className='text-secondary' to="/signup">Create new Account</Link></p>
                 <div className="divider">OR</div>
-                <button className='btn btn-outline w-full'>CONTINUE WITH GOOGLE</button>
+                <button onClick={() => signInWithGoogle()} className='btn btn-outline w-full'><img className='w-[20px] mr-2' src={google} alt='' />CONTINUE WITH GOOGLE</button>
             </div>
         </div>
     );

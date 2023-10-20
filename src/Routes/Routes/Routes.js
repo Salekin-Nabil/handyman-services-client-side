@@ -5,6 +5,8 @@ import Home from "../../Pages/Home/Home";
 import About from "../../Pages/About/About";
 import Reviews from "../../Pages/Reviews/Reviews";
 import Login from "../../Pages/Login/Login";
+import Signin from "../../Pages/Login/Signin";
+import SocialLogin from "../../Pages/SocialLogin/SocialLogin";
 
 const router = createBrowserRouter([
     {
