@@ -5,7 +5,7 @@ import AvailableAppointments from '../AvailableAppointments/AvailableAppointment
 const Appointment = () => {
     const [selectedDate, setSelectedDate] = useState(new Date());
     return (
-        <div>
+        <div className=''>
             <h1 className='text-center uppercase font-black text-5xl'>Schedule An Appointment</h1>
             <AppointmentBanner
                 selectedDate={selectedDate}

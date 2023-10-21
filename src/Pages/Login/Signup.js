@@ -1,6 +1,6 @@
-import React, { useContext, useState, useRef  } from 'react';
+import React, { useContext, useState } from 'react';
 import login from "../../assets/images/login.png";
-import {useSendPasswordResetEmail, useSignInWithEmailAndPassword, useSignInWithGoogle} from 'react-firebase-hooks/auth';
+import {useCreateUserWithEmailAndPassword, useSignInWithGoogle, useUpdateProfile} from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
 import { useForm } from 'react-hook-form';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
@@ -10,9 +10,8 @@ import toast, { Toaster } from 'react-hot-toast';
 // import { AuthContext } from '../../contexts/AuthProvider';
 // import useToken from '../../hooks/useToken';
 
-const Login = () => {
+const Signup = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
-    const emailRef = useRef('');
     // const { signIn } = useContext(AuthContext);
     // const [loginError, setLoginError] = useState('');
     // const [loginUserEmail, setLoginUserEmail] = useState('');
@@ -39,13 +38,13 @@ const Login = () => {
     //         });
     // }
 
-    // const [email, setEmail] = useState('');
+    const [createUserWithEmailAndPassword,user1,loading1,error1] = useCreateUserWithEmailAndPassword(auth);
 
     const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
 
-    const [signInWithEmailAndPassword,user1,loading1,error1] = useSignInWithEmailAndPassword(auth);
-
-    const [sendPasswordResetEmail, sending, error2] = useSendPasswordResetEmail(auth);
+    const [displayName, setDisplayName] = useState('');
+    // const [photoURL, setPhotoURL] = useState('');
+    const [updateProfile, updating, error2] = useUpdateProfile(auth);
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -54,7 +53,7 @@ const Login = () => {
     
     let errorElement;
 
-    if(loading || loading1){
+    if(loading || loading1 || updating){
         return <Loading></Loading>
     }
 
@@ -67,26 +66,16 @@ const Login = () => {
         navigate(from, { replace: true });
     }
 
-    const OnSubmit = data =>{
+    const notify = () => toast('You Have Successfully Registered.');
+
+    const OnSubmit = async data =>{
         console.log(data);
-        const email = emailRef.current.value;
-        signInWithEmailAndPassword(email, data.password);
-    } 
-
-    const notify = () => toast('Email Sent For Password Recovery.');
-    const notify1 = () => toast('Please Enter Your Email');
-
-    const resetPassword = async () => {
-        const email = emailRef.current.value;
-        console.log(email)
-        if (email) {
-            await sendPasswordResetEmail(email);
+        await createUserWithEmailAndPassword(data.email, data.password);
+        const success = await updateProfile({ displayName : data.username });
+          if (success) {
             notify();
-        }
-        else{
-            notify1();
-        }
-    }
+          }
+    } 
 
     return (
         <div className='h-[800px] flex justify-center items-center place-content-between md:mt-[-120px] font-semibold'>
@@ -94,16 +83,38 @@ const Login = () => {
                 <img className='mt-[-100px]' src={login} alt="" />
             </div> */}
             <div className='w-96 p-7'>
-                <h2 className='text-xl text-center uppercase'>Login</h2>
+                <h2 className='text-xl text-center uppercase'>Sign Up</h2>
                 {/* <form> */}
                 <form onSubmit={handleSubmit(OnSubmit)}>
+                    <div className="form-control w-full max-w-xs">
+                        <label className="label"> <span className="label-text">Username</span></label>
+                        <input type="text"
+                            placeholder='Your Username'
+                            {...register("username", {
+                                required: "Username is required",
+                                pattern: {
+                                    value: /[a-z0-9]{3,20}/,
+                                    message: "Provide a valid Username"
+                                }
+                            })}
+                            className="input input-bordered w-full max-w-xs" />
+                        {errors.username?.type === "required" && <p className='text-red-600'>{errors.username?.message}</p>}
+                        {errors.username?.type === "pattern" && <p className='text-red-600'>{errors.username?.message}</p>}
+                    </div>
                     <div className="form-control w-full max-w-xs">
                         <label className="label"> <span className="label-text">Email</span></label>
                         <input type="email"
                             placeholder='Your Email'
-                            required
-                            ref={emailRef}
+                            {...register("email", {
+                                required: "Email Address is required",
+                                pattern: {
+                                    value: /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/,
+                                    message: "Provide a valid Email"
+                                }
+                            })}
                             className="input input-bordered w-full max-w-xs" />
+                        {errors.email?.type === "required" && <p className='text-red-600'>{errors.email?.message}</p>}
+                        {errors.email?.type === "pattern" && <p className='text-red-600'>{errors.email?.message}</p>}
                     </div>
                     <div className="form-control w-full max-w-xs">
                         <label className="label"> <span className="label-text">Password</span></label>
@@ -115,17 +126,17 @@ const Login = () => {
                                 minLength: { value: 6, message: 'Password must be 6 characters or longer' }
                             })}
                             className="input input-bordered w-full max-w-xs" />
+                        
                         {errors.password?.type === "required" && <p className='text-red-600'>{errors.password?.message}</p>}
                         {errors.password?.type === "minLength" && <p className='text-red-600'>{errors.password?.message}</p>}
-                        <p onClick={resetPassword} className="label cursor-pointer">Forgot password?</p>
                     </div>
-                    <input className='btn btn-accent w-full' value="Login" type="submit" />
+                    <input className='btn btn-accent w-full' value="Sign up" type="submit" />
                     <div>
                         {errorElement}
                         {/* {loginError && <p className='text-red-600'>{loginError}</p>} */}
                     </div>
                 </form>
-                <p className='text-sm text-center'>New to Handyman Services? <Link className='text-secondary' to="/signup">Create new Account</Link></p>
+                <p className='text-sm text-center'>Already have an account? <Link className='text-secondary' to="/login">Please Login</Link></p>
                 <div className="divider">OR</div>
                 <button onClick={() => signInWithGoogle()} className='btn btn-outline w-full'><img className='w-[20px] mr-2' src={google} alt='' />CONTINUE WITH GOOGLE</button>
             </div>
@@ -134,4 +145,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default Signup;

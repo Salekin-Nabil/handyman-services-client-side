@@ -5,8 +5,8 @@ import Home from "../../Pages/Home/Home";
 import About from "../../Pages/About/About";
 import Reviews from "../../Pages/Reviews/Reviews";
 import Login from "../../Pages/Login/Login";
-import Signin from "../../Pages/Login/Signin";
-import SocialLogin from "../../Pages/SocialLogin/SocialLogin";
+import Signup from "../../Pages/Login/Signup";
+import RequireAuth from "../../Pages/Login/RequireAuth";
 
 const router = createBrowserRouter([
     {
@@ -22,6 +22,10 @@ const router = createBrowserRouter([
                 element: <Login></Login>
             },
             {
+                path: '/signup',
+                element: <Signup></Signup>
+            },
+            {
                 path: '/about',
                 element: <About></About>
             },
@@ -31,7 +35,7 @@ const router = createBrowserRouter([
             },
             {
                 path: '/appointment',
-                element: <Appointment></Appointment>
+                element: <RequireAuth><Appointment></Appointment></RequireAuth>
             }
         ]
     }

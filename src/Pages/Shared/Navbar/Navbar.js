@@ -1,15 +1,45 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import handyman from '../../../assets/icons/logos/icon-1.png';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { signOut } from 'firebase/auth';
+import auth from '../../../firebase.init';
+import Loading from '../../Loading/Loading';
 
 const Navbar = () => {
+
+    const [load, setLoad] = useState(false)
+    const [user, loading, error] = useAuthState(auth);
+    const logout = () => {
+        signOut(auth);
+      };
+
+    if(load) {
+        return <Loading></Loading>
+    }
+    
+    const logout_loader = () => {
+        let barWidth = 0;
+        setLoad(true);
+        setTimeout(() => {
+            let intervalID = setInterval(() => {
+              if (barWidth === 100) {
+                clearInterval(intervalID);
+                setLoad(false);
+                logout();
+              } else {
+                barWidth++;
+              }
+            }); //this sets the speed of the animation
+          }, 300);
+    }
 
     const menuItems = <React.Fragment>
         <li><Link to="/">Home</Link></li>
         <li><Link to="/appointment">Appointment</Link></li>
         <li><Link to="/about">About</Link></li>
         <li><Link to="/reviews">Reviews</Link></li>
-        <li><Link to="/login">Login</Link></li>
+        <li>{user ? <div className='flex p-0'> <button className='btn btn-ghost' onClick={logout_loader}>Log Out</button> <img className='rounded-full w-[40px] h-[40px]' src={user.photoURL}></img> </div> : <Link to="/login">Login</Link>}</li>
     </React.Fragment>
 
     return (
