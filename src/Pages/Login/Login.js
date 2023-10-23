@@ -1,11 +1,11 @@
 import React, { useContext, useState, useRef  } from 'react';
-import login from "../../assets/images/login.png";
-import {useSendPasswordResetEmail, useSignInWithEmailAndPassword, useSignInWithGoogle} from 'react-firebase-hooks/auth';
+import {useSendPasswordResetEmail, useSignInWithEmailAndPassword, useSignInWithFacebook, useSignInWithGoogle} from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
 import { useForm } from 'react-hook-form';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Loading from '../Loading/Loading';
 import google from '../../assets/images/google.png';
+import facebook from '../../assets/images/facebook.png';
 import toast, { Toaster } from 'react-hot-toast';
 // import { AuthContext } from '../../contexts/AuthProvider';
 // import useToken from '../../hooks/useToken';
@@ -47,6 +47,8 @@ const Login = () => {
 
     const [sendPasswordResetEmail, sending, error2] = useSendPasswordResetEmail(auth);
 
+    const [signInWithFacebook, user2, loading2, error3] = useSignInWithFacebook(auth);
+
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -54,21 +56,20 @@ const Login = () => {
     
     let errorElement;
 
-    if(loading || loading1){
+    if(loading || loading1 || loading2){
         return <Loading></Loading>
     }
 
-    if (error || error1 || error2) {
-        errorElement = <p className='text-red-700  my-4 text-sm'>Error: {error?.message || error1?.message || error2?.message}</p>
+    if (error || error1 || error2 || error3) {
+        errorElement = <p className='text-red-700  my-4 text-sm'>Error: {error?.message || error1?.message || error2?.message || error3?.message}</p>
     }
 
-    if (user || user1) {
-        console.log(user1);
+    if (user || user1 || user2) {
+        console.log(user2);
         navigate(from, { replace: true });
     }
 
     const OnSubmit = data =>{
-        console.log(data);
         const email = emailRef.current.value;
         signInWithEmailAndPassword(email, data.password);
     } 
@@ -90,10 +91,7 @@ const Login = () => {
 
     return (
         <div className='h-[800px] flex justify-center items-center place-content-between md:mt-[-120px] font-semibold'>
-            {/* <div>
-                <img className='mt-[-100px]' src={login} alt="" />
-            </div> */}
-            <div className='w-96 p-7'>
+            <div className='w-96 p-7 shadow-lg shadow-[gray] rounded-xl'>
                 <h2 className='text-xl text-center uppercase'>Login</h2>
                 {/* <form> */}
                 <form onSubmit={handleSubmit(OnSubmit)}>
@@ -127,7 +125,8 @@ const Login = () => {
                 </form>
                 <p className='text-sm text-center'>New to Handyman Services? <Link className='text-secondary' to="/signup">Create new Account</Link></p>
                 <div className="divider">OR</div>
-                <button onClick={() => signInWithGoogle()} className='btn btn-outline w-full'><img className='w-[20px] mr-2' src={google} alt='' />CONTINUE WITH GOOGLE</button>
+                <button onClick={() => signInWithGoogle()} className='btn btn-outline w-full mb-5'><img className='w-[20px] mr-2' src={google} alt='' />CONTINUE WITH GOOGLE</button>
+                <button onClick={() => signInWithFacebook()} className='btn btn-outline w-full hover:bg-[blue] hover:border-0'><img className='w-[20px] mr-2' src={facebook} alt='' />CONTINUE WITH Facebook</button>
             </div>
             <Toaster />
         </div>

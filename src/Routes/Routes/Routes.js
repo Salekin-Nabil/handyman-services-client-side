@@ -7,6 +7,8 @@ import Reviews from "../../Pages/Reviews/Reviews";
 import Login from "../../Pages/Login/Login";
 import Signup from "../../Pages/Login/Signup";
 import RequireAuth from "../../Pages/Login/RequireAuth";
+import MyAppointment from "../../Pages/Dashboard/MyAppointment/MyAppointment";
+import Dashboard from "../../Pages/Dashboard/Dashboard/Dashboard";
 
 const router = createBrowserRouter([
     {
@@ -36,6 +38,35 @@ const router = createBrowserRouter([
             {
                 path: '/appointment',
                 element: <RequireAuth><Appointment></Appointment></RequireAuth>
+            },
+            {
+                path: '/dashboard',
+                element: <RequireAuth>
+                    <Dashboard></Dashboard>
+                    </RequireAuth>,
+                children: [
+                    {
+                        path: '/dashboard',
+                        element: <MyAppointment></MyAppointment>
+                    },
+                    // {
+                    //     path: '/dashboard/allusers',
+                    //     element: <AdminRoute><AllUsers></AllUsers></AdminRoute>
+                    // },
+                    // {
+                    //     path: '/dashboard/adddoctor',
+                    //     element: <AdminRoute><AddDoctor></AddDoctor></AdminRoute>
+                    // },
+                    // {
+                    //     path: '/dashboard/managedoctors',
+                    //     element: <AdminRoute><ManageDoctors></ManageDoctors></AdminRoute>
+                    // },
+                    // {
+                    //     path: '/dashboard/payment/:id',
+                    //     element: <Payment></Payment>,
+                    //     loader: ({params}) => fetch(`https://doctors-portal-server-rust.vercel.app/bookings/${params.id}`)
+                    // },
+                ]
             }
         ]
     }

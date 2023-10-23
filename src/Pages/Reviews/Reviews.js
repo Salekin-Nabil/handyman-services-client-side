@@ -5,7 +5,9 @@ const Reviews = () => {
     return (
         <div>
             <h1 className='text-center uppercase font-black text-5xl'>Review Our Service</h1>
-            <img className='md:ml-[15rem]' src={dribble_1} alt="404 Not Found" />
+            <div className='flex justify-center align-middle'>
+                <img src={dribble_1} alt="404 Not Found" />
+            </div>
         </div>
     );
 };

@@ -2,6 +2,20 @@ import React from 'react';
 import fence from '../../../assets/images/services_image/fence.jpg';
 import { DayPicker } from 'react-day-picker';
 
+const css = `
+  .my-selected:not([disabled]) { 
+    color: white;
+    border-radius: 50%;
+    background: linear-gradient(360deg, #f1f5f3, #013017 );
+    background-repeat: no-repeat;
+    
+  }
+  .my-today { 
+    font-weight: 800;
+    color: rgb(11, 141, 78);
+  }
+`;
+
 const AppointmentBanner = ({selectedDate, setSelectedDate}) => {
     
     return (
@@ -10,6 +24,7 @@ const AppointmentBanner = ({selectedDate, setSelectedDate}) => {
                 <div className="hero-content flex-col lg:flex-row-reverse">
                     <img src={fence} alt="Schedule" className="lg:max-w-xl max-w-sm rounded-lg shadow-2xl" />
                     <div className='mr-6'>
+                    <style>{css}</style>
                         <DayPicker 
                             mode='single'
                             selected={selectedDate}
@@ -24,7 +39,11 @@ const AppointmentBanner = ({selectedDate, setSelectedDate}) => {
                                 },
                                 day: {
                                   margin: "auto",
-                                },
+                                }
+                              }}
+                              modifiersClassNames={{
+                                selected: 'my-selected',
+                                today: 'my-today'
                               }}
                         />
                     </div>

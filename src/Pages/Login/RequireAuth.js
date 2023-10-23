@@ -15,7 +15,7 @@ const RequireAuth = ({ children }) => {
     }
 
     if (!user ) {
-        return <Navigate to="/Login" state={{ from: location }} replace />;
+        return <Navigate to="/login" state={{ from: location }} replace />;
     }
 
     const notify = () => toast('Email Sent For Verification.');

@@ -6,7 +6,7 @@ import PrimaryButton from '../Shared/PrimaryButton';
 const Banner = () => {
     return (
         <div className='mb-12'>
-            <div className="carousel-inner relative w-full overflow-hidden rounded-xl">
+            <div className="carousel-inner relative w-full overflow-hidden rounded-xl shadow-lg shadow-[gray]">
                 <div className="carousel-item active relative float-left w-full">
                     <img
                         src={banner}
