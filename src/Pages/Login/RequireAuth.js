@@ -20,8 +20,6 @@ const RequireAuth = ({ children }) => {
 
     const notify = () => toast('Email Sent For Verification.');
 
-    console.log(user);
-
     if (user.providerData[0]?.providerId ==='password' && !user.emailVerified) {
         return <div className='text-center my-[10vw]'>
             <h3 className='text-blue-900 text-3xl my-5 font-extrabold'>Your Email Is Not Verified!!</h3>

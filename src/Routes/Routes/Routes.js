@@ -9,6 +9,8 @@ import Signup from "../../Pages/Login/Signup";
 import RequireAuth from "../../Pages/Login/RequireAuth";
 import MyAppointment from "../../Pages/Dashboard/MyAppointment/MyAppointment";
 import Dashboard from "../../Pages/Dashboard/Dashboard/Dashboard";
+import MyReviews from "../../Pages/Dashboard/MyReviews/MyReviews";
+import MyHistory from "../../Pages/Dashboard/MyHistory/MyHistory";
 
 const router = createBrowserRouter([
     {
@@ -48,6 +50,14 @@ const router = createBrowserRouter([
                     {
                         path: '/dashboard',
                         element: <MyAppointment></MyAppointment>
+                    },
+                    {
+                        path: '/dashboard/my_reviews',
+                        element: <MyReviews></MyReviews>
+                    },
+                    {
+                        path: '/dashboard/my_history',
+                        element: <MyHistory></MyHistory>
                     },
                     // {
                     //     path: '/dashboard/allusers',

@@ -4,7 +4,7 @@ import React from 'react';
 // import { Link } from 'react-router-dom';
 // import { AuthContext } from '../../../contexts/AuthProvider';
 
-const MyAppointment = () => {
+const MyHistory = () => {
     // const { user } = useContext(AuthContext);
 
     // const url = `https://doctors-portal-server-rust.vercel.app/bookings?email=${user?.email}`;
@@ -24,7 +24,7 @@ const MyAppointment = () => {
 
     return (
         <div>
-            <h3 className="text-3xl mb-5">My Appointments</h3>
+            <h3 className="text-3xl mb-5">My History</h3>
             {/* <div className="overflow-x-auto">
                 <table className="table w-full">
                     <thead>
@@ -69,7 +69,7 @@ const MyAppointment = () => {
     );
 };
 
-export default MyAppointment;
+export default MyHistory;
 
 // import React from 'react';
 // import { useAuthState } from 'react-firebase-hooks/auth';
