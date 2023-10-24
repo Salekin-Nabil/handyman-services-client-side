@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import handyman from '../../../assets/icons/logos/icon-1.png';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { signOut } from 'firebase/auth';
@@ -10,6 +10,7 @@ const Navbar = () => {
 
     const [load, setLoad] = useState(false)
     const [user, loading, error] = useAuthState(auth);
+    const location = useLocation();
     const logout = () => {
         signOut(auth);
       };
@@ -63,6 +64,12 @@ const Navbar = () => {
                     {menuItems}
                 </ul>
             </div>
+            {(location.pathname === "/dashboard" || location.pathname === "/dashboard/my_reviews" || location.pathname === "/dashboard/my_history") && <div className='navbar-end lg:hidden'>
+                <label tabIndex={1} htmlFor='dashboard-sidebar' className="btn btn-ghost lg:hidden">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
+                </label>
+            </div>}
+            
         </div>
     );
 };

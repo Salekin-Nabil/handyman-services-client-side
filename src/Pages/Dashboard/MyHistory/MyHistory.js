@@ -24,7 +24,7 @@ const MyHistory = () => {
 
     return (
         <div>
-            <h3 className="text-3xl mb-5">My History</h3>
+            <h3 className="text-3xl mb-5 font-bold text-transparent bg-clip-text bg-gradient-to-br from-accent to-secondary text-center uppercase">My History</h3>
             {/* <div className="overflow-x-auto">
                 <table className="table w-full">
                     <thead>

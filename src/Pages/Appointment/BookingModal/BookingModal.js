@@ -20,8 +20,8 @@ const BookingModal = ({ treatment, setTreatment, selectedDate, refetch }) => {
         // [3, 4, 5].map((value, i) => console.log(value))
         const booking = {
             appointmentDate: date,
-            treatmentId: _id,
-            treatment: name,
+            serviceId: _id,
+            service: name,
             username: username,
             slot,
             email,

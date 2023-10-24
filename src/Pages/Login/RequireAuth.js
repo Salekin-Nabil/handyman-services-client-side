@@ -18,6 +18,7 @@ const RequireAuth = ({ children }) => {
         return <Navigate to="/login" state={{ from: location }} replace />;
     }
 
+    console.log(user.photoURL);
     const notify = () => toast('Email Sent For Verification.');
 
     if (user.providerData[0]?.providerId ==='password' && !user.emailVerified) {
