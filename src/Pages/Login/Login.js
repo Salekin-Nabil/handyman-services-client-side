@@ -1,4 +1,4 @@
-import React, { useContext, useState, useRef  } from 'react';
+import React, { useContext, useState, useRef, useEffect  } from 'react';
 import {useSendPasswordResetEmail, useSignInWithEmailAndPassword, useSignInWithFacebook, useSignInWithGoogle} from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
 import { useForm } from 'react-hook-form';
@@ -7,8 +7,8 @@ import Loading from '../Loading/Loading';
 import google from '../../assets/images/google.png';
 import facebook from '../../assets/images/facebook.png';
 import toast, { Toaster } from 'react-hot-toast';
+import useToken1 from '../../hooks/useToken1';
 // import { AuthContext } from '../../contexts/AuthProvider';
-// import useToken from '../../hooks/useToken';
 
 const Login = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
@@ -16,7 +16,6 @@ const Login = () => {
     // const { signIn } = useContext(AuthContext);
     // const [loginError, setLoginError] = useState('');
     // const [loginUserEmail, setLoginUserEmail] = useState('');
-    // // const [token] = useToken(loginUserEmail);
 
     // const from = location.state?.from?.pathname || '/';
 
@@ -51,9 +50,16 @@ const Login = () => {
 
     const navigate = useNavigate();
     const location = useLocation();
+    const [token] = useToken1(user || user1 || user2);
 
     let from = location.state?.from?.pathname || "/";
     
+    useEffect(()=>{
+        if (token) {
+            navigate(from, { replace: true });
+        }
+    },[token,from,navigate]);
+
     let errorElement;
 
     if(loading || loading1 || loading2){
@@ -62,11 +68,9 @@ const Login = () => {
 
     if (error || error1 || error2 || error3) {
         errorElement = <p className='text-red-700  my-4 text-sm'>Error: {error?.message || error1?.message || error2?.message || error3?.message}</p>
-    }
+    }  
 
-    if (user || user1 || user2) {
-        navigate(from, { replace: true });
-    }
+
 
     const OnSubmit = data =>{
         const email = emailRef.current.value;

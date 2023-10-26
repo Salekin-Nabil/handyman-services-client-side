@@ -11,6 +11,9 @@ import MyAppointment from "../../Pages/Dashboard/MyAppointment/MyAppointment";
 import Dashboard from "../../Pages/Dashboard/Dashboard/Dashboard";
 import MyReviews from "../../Pages/Dashboard/MyReviews/MyReviews";
 import MyHistory from "../../Pages/Dashboard/MyHistory/MyHistory";
+import AllUsers from "../../Pages/Dashboard/AllUsers/AllUsers";
+import RequireAdmin from "../../Pages/Login/RequireAdmin";
+import AllBookings from "../../Pages/Dashboard/AllBookings/AllBookings";
 
 const router = createBrowserRouter([
     {
@@ -59,23 +62,14 @@ const router = createBrowserRouter([
                         path: '/dashboard/my_history',
                         element: <MyHistory></MyHistory>
                     },
-                    // {
-                    //     path: '/dashboard/allusers',
-                    //     element: <AdminRoute><AllUsers></AllUsers></AdminRoute>
-                    // },
-                    // {
-                    //     path: '/dashboard/adddoctor',
-                    //     element: <AdminRoute><AddDoctor></AddDoctor></AdminRoute>
-                    // },
-                    // {
-                    //     path: '/dashboard/managedoctors',
-                    //     element: <AdminRoute><ManageDoctors></ManageDoctors></AdminRoute>
-                    // },
-                    // {
-                    //     path: '/dashboard/payment/:id',
-                    //     element: <Payment></Payment>,
-                    //     loader: ({params}) => fetch(`https://doctors-portal-server-rust.vercel.app/bookings/${params.id}`)
-                    // },
+                    {
+                        path: '/dashboard/users',
+                        element: <RequireAdmin><AllUsers></AllUsers></RequireAdmin>
+                    },
+                    {
+                        path: '/dashboard/all_bookings',
+                        element: <RequireAdmin><AllBookings></AllBookings></RequireAdmin>
+                    },
                 ]
             }
         ]

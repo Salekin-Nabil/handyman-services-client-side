@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 
-const useToken = (user) => {
+const useToken1 = (user) => {
     const [token, setToken] = useState('');
     useEffect(() => {
-        const email = user[0]?.user?.email;
-        const name = user[0]?.user?.displayName || user[1];
-        const photo = user[0]?.user?.photoURL || "https://graph.facebook.com/1840598326336872/picture";
+        const email = user?.user?.email;
+        const name = user?.user?.displayName;
+        const photo = user?.user?.photoURL;
         const currentUser = {name: name, email: email, photo: photo};
         if (email) {
             fetch(`http://localhost:7000/user/${email}`,{
@@ -26,4 +26,4 @@ const useToken = (user) => {
     return [token];
 }
 
-export default useToken;
+export default useToken1;

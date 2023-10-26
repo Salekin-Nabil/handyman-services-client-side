@@ -7,8 +7,8 @@ import Loading from '../Loading/Loading';
 import google from '../../assets/images/google.png';
 import facebook from '../../assets/images/facebook.png';
 import toast, { Toaster } from 'react-hot-toast';
+import useToken from '../../hooks/useToken';
 // import { AuthContext } from '../../contexts/AuthProvider';
-// import useToken from '../../hooks/useToken';
 
 const Signup = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
@@ -50,6 +50,9 @@ const Signup = () => {
 
     const navigate = useNavigate();
     const location = useLocation();
+    // const [img, setImg] = useState('');
+    const [token] = useToken([(user || user1 || user2), displayName]);
+    // const imageStorageKey = '4e2ac90c555ef2e96717462dc536a405';
 
     let from = location.state?.from?.pathname || "/";
     
@@ -63,15 +66,34 @@ const Signup = () => {
         errorElement = <p className='text-red-700  my-4 text-sm'>Error: {error?.message || error1?.message || error2?.message || error3?.message}</p>
     }
 
-    if (user || user1 || user2) {
-        console.log(user2);
+    if (token) {
+        // console.log(user2);
         navigate(from, { replace: true });
     }
 
     const notify = () => toast('You Have Successfully Registered.');
 
     const OnSubmit = async data =>{
+        setDisplayName(data.username);
         await createUserWithEmailAndPassword(data.email, data.password);
+        // const image = data.photo[0];
+        // console.log(data.photo[0]);
+        // const formData = new FormData();
+        // formData.append('photo', image);
+        // const url = `https://api.imgbb.com/1/upload?key=${imageStorageKey}`;
+        // fetch(url, {
+        //     method: 'POST',
+        //     body: formData
+        // })
+        // .then(res => res.json())
+        // .then(result => {
+        //     if(result.success){
+        //         setImg(result.data.url);
+        //         setPhotoURL(result.data.url);
+        //     }
+        //     console.log('imgbb:', result);
+        //     console.log('url:', result.data.url);
+        // });
         const success = await updateProfile({ displayName : data.username });
           if (success) {
             notify();
@@ -79,7 +101,7 @@ const Signup = () => {
     } 
 
     return (
-        <div className='h-[800px] flex justify-center items-center place-content-between md:mt-[-120px] font-semibold'>
+        <div className='h-[800px] flex justify-center items-center place-content-between md:mt-[-60px] font-semibold'>
             <div className='w-96 p-7 shadow-lg shadow-[gray] rounded-xl'>
                 <h2 className='text-xl text-center uppercase'>Sign Up</h2>
                 {/* <form> */}
