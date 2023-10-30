@@ -5,7 +5,7 @@ const useToken1 = (user) => {
     useEffect(() => {
         const email = user?.user?.email;
         const name = user?.user?.displayName;
-        const photo = user?.user?.photoURL;
+        const photo = user?.user?.photoURL || "https://graph.facebook.com/1840598326336872/picture";
         const currentUser = {name: name, email: email, photo: photo};
         if (email) {
             fetch(`http://localhost:7000/user/${email}`,{

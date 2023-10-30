@@ -5,6 +5,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import auth from '../../../firebase.init';
 import { useNavigate } from 'react-router-dom';
 import { signOut } from 'firebase/auth';
+import { Helmet } from 'react-helmet';
 // import { Link } from 'react-router-dom';
 // import { AuthContext } from '../../../contexts/AuthProvider';
 
@@ -53,7 +54,10 @@ const AllBookings = () => {
 
     return (
         <div className='mb-[60px] mx-[10px]'>
-            <h3 className="text-3xl mb-5 font-bold text-transparent bg-clip-text bg-gradient-to-br from-accent to-secondary text-center uppercase">All Appointments</h3>
+            <Helmet>
+                <title>Handyman Service-All Appointments</title>
+            </Helmet>
+             <h1 className='text-transparent bg-clip-text bg-gradient-to-br from-accent to-secondary text-5xl mb-8 font-bold shadow-lg shadow-[gray] hover:shadow-xl hover:shadow-[gray] mx-[1vw] py-[1vw] rounded-lg'>All <span className='text-[#20242c]'>Appointments</span></h1>
             <div className="overflow-x-auto rounded-xl shadow-xl shadow-[gray]">
                 <table className="table-zebra w-full">
                     <thead className='bg-gradient-to-br from-accent to-secondary text-white'>

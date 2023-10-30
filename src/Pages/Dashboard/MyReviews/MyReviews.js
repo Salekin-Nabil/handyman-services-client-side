@@ -1,90 +1,164 @@
-import { useQuery } from '@tanstack/react-query';
-// import React, { useContext } from 'react';
-import React from 'react';
-// import { Link } from 'react-router-dom';
-// import { AuthContext } from '../../../contexts/AuthProvider';
+import React, { useRef, useState } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import Helmet from 'react-helmet';
+import { useForm } from 'react-hook-form';
+import ReactStars from "react-rating-stars-component";
+import auth from '../../../firebase.init';
+import logo from '../../../assets/icons/logos/icon-1.png';
+import toast, { Toaster } from 'react-hot-toast';
+import '../../Shared/gradient.css'
 
 const MyReviews = () => {
-    // const { user } = useContext(AuthContext);
+    const [user] = useAuthState(auth);
+    const {displayName, email} = user;
+    const reviewRef = useRef('');
+    const [review, setReview] = useState(0);
 
-    // const url = `https://doctors-portal-server-rust.vercel.app/bookings?email=${user?.email}`;
+    const ratingChanged = (newRating) => {
+        setReview(newRating);
+      };
 
-    // const { data: bookings = [] } = useQuery({
-    //     queryKey: ['bookings', user?.email],
-    //     queryFn: async () => {
-    //         const res = await fetch(url, {
-    //             headers: {
-    //                 authorization: `bearer ${localStorage.getItem('accessToken')}`
-    //             }
-    //         });
-    //         const data = await res.json();
-    //         return data;
-    //     }
-    // })
-
+    const { register, handleSubmit } = useForm();
+    const onSubmit = () => {
+        const data = {
+            "userName": user.displayName,
+            "userEmail": user.email,
+            "userPhoto": user.photoURL,
+            "ratings": reviewRef.current.value,
+            "reviews": review
+        };
+        console.log(data);
+        
+        const url = `http://localhost:7000/reviews/${email}`;
+        fetch(url, {
+            method: 'PUT',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(res=> res.json())
+        .then(result =>{
+            console.log(result);
+            toast('Thanks for your valuable review.');
+        });
+    };
     return (
         <div>
-            <h3 className="text-3xl mb-5 font-bold text-transparent bg-clip-text bg-gradient-to-br from-accent to-secondary text-center uppercase">My Reviews</h3>
-            {/* <div className="overflow-x-auto">
-                <table className="table w-full">
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>Name</th>
-                            <th>Treatment</th>
-                            <th>Date</th>
-                            <th>Time</th>
-                            <th>Payment</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            bookings &&
-                            bookings?.map((booking, i) => <tr key={booking._id}>
-                                <th>{i + 1}</th>
-                                <td>{booking.patient}</td>
-                                <td>{booking.treatment}</td>
-                                <td>{booking.appointmentDate}</td>
-                                <td>{booking.slot}</td>
-                                <td>
-                                    {
-                                        booking.price && !booking.paid && <Link
-                                            to={`/dashboard/payment/${booking._id}`}
-                                        >
-                                            <button
-                                                className='btn btn-primary btn-sm'
-                                            >Pay</button>
-                                        </Link>
-                                    }
-                                    {
-                                        booking.price && booking.paid && <span className='text-green-500'>Paid</span>
-                                    }
-                                </td>
-                            </tr>)
-                        }
-                    </tbody>
-                </table>
-            </div> */}
+            <Helmet>
+                <title>Handyman Service-Add a Review</title>
+            </Helmet>
+             <h1 className='text-transparent bg-clip-text bg-gradient-to-br from-accent to-secondary text-5xl mb-8 font-bold shadow-lg shadow-[gray] hover:shadow-xl hover:shadow-[gray] mx-[1vw] py-[1vw] rounded-lg'>My <span className='text-[#20242c]'>Review</span></h1>
+             <div className='flex items-center'>
+                <div className='hidden md:block'>
+                    <img src={logo} alt=''/>
+                    <h3 className='text-4xl font-semibold text-[#20242c]'><span className='gradient_background px-1 rounded text-white mb-4 md:mb-0 py-1'>Handyman</span>Service</h3>
+                </div>
+                <div className="block p-6 rounded-xl shadow-lg shadow-[gray] hover:shadow-xl hover:shadow-[gray] bg-white w-full md:mx-10 mb-8">
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        <p className='text-2xl text-center font-black mb-4 text-transparent bg-clip-text bg-gradient-to-br from-accent to-secondary uppercase'>Add a Review</p>
+                        <div className="form-group mb-6 w-full mr-2">
+                            <input type="text" className="block
+                                    w-full
+                                    px-3
+                                    py-1.5
+                                    text-base
+                                    font-normal
+                                    text-gray-700
+                                    bg-white bg-clip-padding
+                                    border-4 border-solid border-[#194519]
+                                    shadow-lg shadow-[gray] hover:shadow-xl hover:shadow-[gray]
+                                    rounded-xl
+                                    transition
+                                    ease-in-out
+                                    m-0
+                                    focus:text-gray-700 focus:bg-white focus:border-[#194519] focus:outline-none"
+                                    value={displayName} readOnly required/>
+                        </div>
+                        <div className="form-group mb-6 w-full">
+                            <input type="email" className="block
+                                    w-full
+                                    px-3
+                                    py-1.5
+                                    text-base
+                                    font-normal
+                                    text-gray-700
+                                    bg-white bg-clip-padding
+                                    border-4 border-solid border-[#194519]
+                                    shadow-lg shadow-[gray] hover:shadow-xl hover:shadow-[gray]
+                                    rounded-xl
+                                    transition
+                                    ease-in-out
+                                    m-0
+                                    focus:text-gray-700 focus:bg-white focus:border-[#194519] focus:outline-none"
+                                    value={email} readOnly required/>
+                        </div>
+                        <div className='flex justify-center mb-4'>
+                            <ReactStars
+                                    count={5}
+                                    onChange={ratingChanged}
+                                    size={24}
+                                    isHalf={true}
+                                    emptyIcon={<i className="far fa-star"></i>}
+                                    halfIcon={<i className="fa fa-star-half-alt"></i>}
+                                    fullIcon={<i className="fa fa-star"></i>}
+                                    activeColor="#ffd700"
+                            />
+                        </div>
+                        <div className="form-group mb-6 w-full mr-2">
+                            <textarea className="form-control block
+                                    w-full
+                                    px-3
+                                    py-1.5
+                                    text-base
+                                    font-normal
+                                    text-gray-700
+                                    bg-white bg-clip-padding
+                                    border-4 border-solid border-[#194519]
+                                    shadow-lg shadow-[gray] hover:shadow-xl hover:shadow-[gray]
+                                    rounded-xl
+                                    transition
+                                    ease-in-out
+                                    m-0
+                                    focus:text-gray-700 focus:bg-white focus:border-[#194519] focus:outline-none"
+                                    ref={reviewRef}
+                                    placeholder="Review Description" required/>
+                        </div>
+                                
+                        <div className="form-group form-check text-center mb-6">
+                            <input type="checkbox"
+                                    className="form-check-input appearance-none h-4 w-4 border border-[#194519] rounded-sm bg-white checked:bg-[#194519] checked:border-[#194519] focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain mr-2 cursor-pointer"
+                            />
+                            <label className="form-check-label inline-block text-[#20242c]" htmlFor="exampleCheck87">Send me a copy of this message</label>
+                            </div>
+                            <button type="submit" className="
+                                w-full
+                                px-6
+                                py-2.5
+                                gradient_background
+                                text-white
+                                font-medium
+                                text-xs
+                                leading-tight
+                                uppercase
+                                rounded-xl
+                                hover:bg-[#3a8e50]
+                                focus:bg-[#1d4e25] 
+                                active:bg-[#153a18] focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg
+                                shadow-lg shadow-[gray] hover:shadow-xl hover:shadow-[gray]
+                                transition
+                                duration-150
+                                ease-in-out">Submit Review</button>
+                    </form>
+                </div>
+                <div className='hidden md:block'>
+                    <img src={logo} alt=''/>
+                    <h3 className='text-4xl font-semibold text-[#20242c]'><span className='gradient_background py-1 px-1 rounded text-white mb-4 md:mb-0'>Handyman</span>Service</h3>
+                </div>
+            </div>
+            <Toaster/>
         </div>
     );
 };
 
 export default MyReviews;
-
-// import React from 'react';
-// import { useAuthState } from 'react-firebase-hooks/auth';
-// import { Link, Outlet } from 'react-router-dom';
-// import auth from '../../../firebase.init';
-// // import useAdmin from '../../hooks/useAdmin';
-
-// const MyAppointment = () => {
-//     const [user] = useAuthState(auth);
-//     // const [admin] = useAdmin(user);
-//     return (
-//         <div className="">
-//             <h1>My Appointment</h1>
-//         </div>
-//     );
-// };
-
-// export default MyAppointment;
