@@ -30,16 +30,6 @@ const ScrollTop= () => {
 
   return (
     <>
-      {/* <!-- Explanation --> */}
-      <div className="container mt-4 text-center text-gray-800">
-        <p className="mb-4">
-          Start scrolling the page and a strong{" "}
-          <strong>"Back to top" button </strong> will appear in the{" "}
-          <strong>bottom right corner</strong> of the screen.
-        </p>
-        <p>Click this button and you will be taken to the top of the page.</p>
-      </div>
-
       {/* <!-- Back to top button --> */}
       {showButton && (
         <TERipple rippleColor="light">
@@ -48,13 +38,13 @@ const ScrollTop= () => {
             onClick={backToTop}
             className={` ${
               showButton ? `inline-block` : `hidden`
-            } fixed bottom-[40px] right-[40px] p-3 bg-green-800 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-green-600 hover:shadow-lg focus:bg-green-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out`}
+            } fixed bottom-[40px] right-[100px] p-3 bg-green-800 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-green-600 hover:shadow-lg focus:bg-green-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-800 active:shadow-lg transition duration-150 ease-in-out`}
           >
             <svg
               aria-hidden="true"
               focusable="false"
               data-prefix="fas"
-              className="w-4 h-4"
+              className="w-5 h-5"
               role="img"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 448 512"

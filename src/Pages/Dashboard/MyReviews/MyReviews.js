@@ -40,7 +40,7 @@ const MyReviews = () => {
         .then(res=> res.json())
         .then(result =>{
             console.log(result);
-            toast('Thanks for your valuable review.');
+            toast.success('Thanks for your valuable review.');
         });
     };
     return (
@@ -122,7 +122,7 @@ const MyReviews = () => {
                                     m-0
                                     focus:text-gray-700 focus:bg-white focus:border-[#194519] focus:outline-none"
                                     ref={reviewRef}
-                                    placeholder="Review Description" required/>
+                                    placeholder="Review Description" required rows={5}/>
                         </div>
                                 
                         <div className="form-group form-check text-center mb-6">

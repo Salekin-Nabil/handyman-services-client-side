@@ -3,7 +3,6 @@ import { useAuthState, useSendEmailVerification } from 'react-firebase-hooks/aut
 import { Navigate, useLocation } from 'react-router-dom';
 import auth from '../../firebase.init';
 import Loading from '../Loading/Loading';
-import toast, { Toaster } from 'react-hot-toast';
 import useAdmin from '../../hooks/useAdmin';
 import { signOut } from 'firebase/auth';
 

@@ -39,7 +39,6 @@ const MyAppointment = () => {
     }, [user]);
 
     const handleDeleteBooking = id => {
-        console.log(id);
         fetch(`http://localhost:7000/bookings/${id}`, {
             method: 'DELETE', 
             headers: {
@@ -95,7 +94,7 @@ const MyAppointment = () => {
                                 <td className='text-center py-5'>{appointment.service}</td>
                                 <td className='text-center py-5'>{appointment.appointmentDate}</td>
                                 <td className='text-center py-5'>{appointment.slot}</td>
-                                <td className='text-center py-5'><button onClick={() => handleDeleteBooking(appointment._id)} className='btn btn-xs btn-danger'>Cancel</button></td>
+                                <td className='text-center py-5'><button onClick={() => handleDeleteBooking(appointment._id)} className='btn btn-xs btn-danger text-white bg-[red] border-0 shadow shadow-[black]'>Cancel</button></td>
                             </tr>)
                         }
                     </tbody>

@@ -116,8 +116,8 @@ const AllUsers = () => {
                                 </div>
                               </td>
                               <td className='text-center py-5'>{user.email}</td>
-                              <td className='text-center py-5'>{ user?.role !== 'admin' ? <button onClick={() => handleMakeAdmin(user.email)} className='btn btn-xs btn-primary'>Make Admin</button> : "Admin"}</td>
-                              <td className='text-center py-5'>{ user?.role !== 'admin' && <button onClick={() => handleDeleteUser(user.email)} className='btn btn-xs btn-danger'>Delete</button>}</td>
+                              <td className='text-center py-5'>{ user?.role !== 'admin' ? <button onClick={() => handleMakeAdmin(user.email)} className='btn btn-xs btn-primary bg-[#2a6e2a] text-white border-0 shadow shadow-[black]'>Make Admin</button> : "Admin"}</td>
+                              <td className='text-center py-5'>{ user?.role !== 'admin' && <button onClick={() => handleDeleteUser(user.email)} className='btn btn-xs btn-danger bg-[red] text-white border-0 shadow shadow-[black]'>Delete</button>}</td>
                             </tr>)
                         }
       

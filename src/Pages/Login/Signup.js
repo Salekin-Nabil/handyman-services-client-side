@@ -71,7 +71,7 @@ const Signup = () => {
         navigate(from, { replace: true });
     }
 
-    const notify = () => toast('You Have Successfully Registered.');
+    const notify = () => toast.success('You Have Successfully Registered.');
 
     const OnSubmit = async data =>{
         setDisplayName(data.username);

@@ -77,8 +77,8 @@ const Login = () => {
         signInWithEmailAndPassword(email, data.password);
     } 
 
-    const notify = () => toast('Email Sent For Password Recovery.');
-    const notify1 = () => toast('Please Enter Your Email');
+    const notify = () => toast.error('Email Sent For Password Recovery.');
+    const notify1 = () => toast.error('Please Enter Your Email');
 
     const resetPassword = async () => {
         const email = emailRef.current.value;
