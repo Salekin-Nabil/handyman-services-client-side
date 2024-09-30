@@ -10,7 +10,7 @@ const Banner = () => {
                 <div className="carousel-item active relative float-left w-full">
                     <img
                         src={banner}
-                        className="block w-full md:h-[470px]"
+                        className="block w-full md:h-[37vw]"
                         alt="..."
                     />
                 </div>
